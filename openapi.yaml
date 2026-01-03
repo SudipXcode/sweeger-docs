@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: My API
+  version: 1.0.0
+  description: API documentation
+servers:
+  - url: http://localhost:3000
+paths:
+  /users:
+    get:
+      summary: Get all users
+      tags:
+        - Users
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              example:
+                - id: 1
+                  name: John
+                  email: john@example.com
+                - id: 2
+                  name: Jane
+                  email: jane@example.com
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                  example: John
+                email:
+                  type: string
+                  example: john@example.com
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              example:
+                id: 3
+                name: John
+                email: john@example.com
+  /users/{id}:
+    put:
+      summary: Update a user (full update)
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                  example: Updated Name
+                email:
+                  type: string
+                  example: updated@example.com
+      responses:
+        "200":
+          description: User updated
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Updated Name
+                email: updated@example.com
+    patch:
+      summary: Update a user (partial update)
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Partial Name Update
+                email:
+                  type: string
+                  example: partial@example.com
+      responses:
+        "200":
+          description: User partially updated
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Partial Name Update
+                email: partial@example.com
+components: {}
+tags:
+  - name: Users
+    description: User management APIs
